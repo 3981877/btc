@@ -49,7 +49,7 @@ def enter_password(password):
     """模拟键盘输入密码并按两次回车键确认"""
     pyautogui.typewrite(password)  # 输入密码
     pyautogui.press('enter')  # 第一次按回车键确认
-    time.sleep(0.5)  # 等待0.5秒
+    time.sleep(0.1)  # 等待0.1秒
     pyautogui.press('enter')  # 第二次按回车键确认
 
 def automate_password_input(interval=30):
@@ -60,7 +60,7 @@ def automate_password_input(interval=30):
 
         # 查找并激活比特币核心钱包窗口
         if find_and_activate_bitcoin_wallet():
-            time.sleep(2)  # 等待2秒，确保窗口激活
+            time.sleep(0.1)  # 等待0.1秒，确保窗口激活
             enter_password(password)  # 输入密码并自动确认
             print("Password entered and confirmed.")
         else:
@@ -69,7 +69,7 @@ def automate_password_input(interval=30):
         time.sleep(interval)  # 等待指定的间隔时间后再次执行
 
 if __name__ == "__main__":
-    automate_password_input(interval=60)  # 每60秒重复执行一次
+    automate_password_input(interval=0.1)  # 每0.1秒重复执行一次
 
 ```
 
