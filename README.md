@@ -74,3 +74,76 @@ if __name__ == "__main__":
 ### 注意事项：
 
 - 可以根据实际情况调整 `time.sleep(0.5)` 的时间。如果比特币核心钱包需要更长的时间来处理第一次确认，你可以增加这个时间。
+
+
+# 只包含数字和字母不带特殊字符
+
+如果你只需要数字和字母，而不想要特殊字符，可以在生成密码的代码中只包含 **字母（大小写）** 和 **数字**。我们可以通过 `string.ascii_letters` 和 `string.digits` 来生成不含特殊字符的密码。
+
+### 更新后的代码（只包含字母和数字）：
+
+```python
+import pyautogui
+import pygetwindow as gw
+import secrets
+import string
+import time
+
+def generate_random_password(length=12):
+    """生成随机密码，只包含大小写字母和数字"""
+    characters = string.ascii_letters + string.digits  # 只包含字母和数字
+    password = ''.join(secrets.choice(characters) for _ in range(length))
+    return password
+
+def find_and_activate_bitcoin_wallet():
+    """查找并激活比特币核心钱包窗口"""
+    windows = gw.getWindowsWithTitle('Bitcoin Core')  # 比特币核心钱包的窗口标题
+    if windows:
+        wallet_window = windows[0]
+        wallet_window.activate()  # 激活窗口
+        return True
+    else:
+        print("Bitcoin Core window not found.")
+        return False
+
+def enter_password(password):
+    """模拟键盘输入密码并按两次回车键确认"""
+    pyautogui.typewrite(password)  # 输入密码
+    pyautogui.press('enter')  # 第一次按回车键确认
+    time.sleep(0.5)  # 等待0.5秒
+    pyautogui.press('enter')  # 第二次按回车键确认
+
+def automate_password_input(interval=30):
+    """自动化循环输入密码，间隔指定的秒数"""
+    while True:
+        password = generate_random_password()  # 生成随机密码
+        print(f"Generated Password: {password}")  # 显示生成的密码
+
+        # 查找并激活比特币核心钱包窗口
+        if find_and_activate_bitcoin_wallet():
+            time.sleep(2)  # 等待2秒，确保窗口激活
+            enter_password(password)  # 输入密码并自动确认
+            print("Password entered and confirmed.")
+        else:
+            print("Failed to activate Bitcoin Core window.")
+
+        time.sleep(interval)  # 等待指定的间隔时间后再次执行
+
+if __name__ == "__main__":
+    automate_password_input(interval=60)  # 每60秒重复执行一次
+
+```
+
+### 主要改进：
+
+1. **密码生成**：
+    - 在 `generate_random_password()` 函数中，密码生成现在只包含大小写字母和数字，通过 `string.ascii_letters + string.digits` 实现。
+    - 不再包含特殊字符。
+
+### 使用方法：
+
+1. 运行代码，它将每隔指定的时间生成一个只包含字母和数字的随机密码，并自动输入到比特币核心钱包的密码输入框中，然后按两次 `Enter` 键来确认输入。
+2. 可以通过更改 `interval` 参数来调整密码输入的频率。
+
+
+
