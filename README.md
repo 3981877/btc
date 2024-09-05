@@ -146,4 +146,75 @@ if __name__ == "__main__":
 2. 可以通过更改 `interval` 参数来调整密码输入的频率。
 
 
+# 密码中包含2019
+为了满足密码要求，即密码中包含固定的 **“2019”**，并在其后再加上4位的随机数字或字母，我对代码进行了相应的修改。
 
+### 更新后的代码（包含“2019”并加上4位随机字母或数字）：
+
+```python
+import pyautogui
+import pygetwindow as gw
+import secrets
+import string
+import time
+
+def generate_random_password():
+    """生成密码，包含固定的'2019'和4位随机字母或数字"""
+    fixed_part = '2019'
+    random_part = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(4))  # 4位随机字母或数字
+    password = fixed_part + random_part
+    return password
+
+def find_and_activate_bitcoin_wallet():
+    """查找并激活比特币核心钱包窗口"""
+    windows = gw.getWindowsWithTitle('Bitcoin Core')  # 比特币核心钱包的窗口标题
+    if windows:
+        wallet_window = windows[0]
+        wallet_window.activate()  # 激活窗口
+        return True
+    else:
+        print("Bitcoin Core window not found.")
+        return False
+
+def enter_password(password):
+    """模拟键盘输入密码并按两次回车键确认"""
+    pyautogui.typewrite(password)  # 输入密码
+    pyautogui.press('enter')  # 第一次按回车键确认
+    time.sleep(0.5)  # 等待0.5秒
+    pyautogui.press('enter')  # 第二次按回车键确认
+
+def automate_password_input(interval=30):
+    """自动化循环输入密码，间隔指定的秒数"""
+    while True:
+        password = generate_random_password()  # 生成密码
+        print(f"Generated Password: {password}")  # 显示生成的密码
+
+        # 查找并激活比特币核心钱包窗口
+        if find_and_activate_bitcoin_wallet():
+            time.sleep(2)  # 等待2秒，确保窗口激活
+            enter_password(password)  # 输入密码并自动确认
+            print("Password entered and confirmed.")
+        else:
+            print("Failed to activate Bitcoin Core window.")
+
+        time.sleep(interval)  # 等待指定的间隔时间后再次执行
+
+if __name__ == "__main__":
+    automate_password_input(interval=60)  # 每60秒重复执行一次
+
+```
+
+### 主要改进：
+
+1. **密码生成**：
+    - 密码固定部分为 **“2019”**。
+    - 随机部分为4位随机字符（包括大小写字母和数字）。
+    - 通过函数 `generate_random_password()`，密码格式始终是 `"2019"` 加上 4 位的随机字母或数字，例如 `2019Ab3d`。
+2. **自动化循环**：
+    - 该程序每隔 `interval` 秒生成一个新密码，并自动输入到比特币核心钱包的输入框中。
+    - 按照需求，密码输入后会按两次 `Enter` 键。
+
+### 使用方法：
+
+1. 运行程序，它将每隔指定的时间生成一个包含“2019”及4位随机字符的密码，并自动输入到比特币核心钱包中，随后按两次 `Enter` 键进行确认。
+2. 你可以根据需要调整 `interval` 参数来控制密码输入的频率。
