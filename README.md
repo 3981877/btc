@@ -1,4 +1,19 @@
-# btc
+# btc编写一个自动识别并输入密码的程序
+
+编写一个自动识别并输入密码的程序，通常需要结合几种技术，例如屏幕图像识别和键盘模拟。以下是一个简单的Python代码示例，使用 `pyautogui` 和 `pytesseract` 库来进行图像识别与模拟键盘输入。
+
+步骤如下：
+
+1. **安装依赖库：**
+你需要安装 `pyautogui`、`pillow`（用于处理图像）、`pytesseract`（用于文本识别） 以及 `opencv-python`（用于图像处理）。
+    
+    ```bash
+    pip install pyautogui pillow pytesseract opencv-python
+    
+    ```
+    
+2. **配置 Tesseract：**`pytesseract` 依赖于 Tesseract OCR 引擎。你需要下载 Tesseract，并设置路径。可以在 [Tesseract GitHub](https://github.com/tesseract-ocr/tesseract) 下载。
+
 比特币核心钱包自动输入密码确认
 如果每次输入完密码后需要按 **两次确认**，你可以在密码输入后增加一次额外的 `Enter` 按键操作。
 
